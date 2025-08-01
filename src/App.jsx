@@ -1,3 +1,4 @@
+import './App.css';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router';
 import { ThemeProvider as MUIThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -19,25 +20,26 @@ const AppContent = () => {
     palette: {
       mode: darkMode ? 'dark' : 'light',
       primary: {
-        main: '#CCDC28',
+        main: '#FCA311',
         contrastText: '#000000',
       },
       secondary: {
-        main: darkMode ? '#CCDC28' : '#1976d2',
+        main: darkMode ? '#FCA311' : '#48BCA2',
       },
       background: {
         default: darkMode ? '#121212' : '#ffffff',
-        paper: darkMode ? '#1e1e1e' : '#ffffff',
+        paper: darkMode ? '#14213D' : '#ffffff',
       },
     },
     components: {
       MuiButton: {
         styleOverrides: {
-          contained: {
-            backgroundColor: '#CCDC28',
-            color: '#000000',
+          contained: { 
+            backgroundColor: '#FCA311',
+            color: '#14213D',
             '&:hover': {
-              backgroundColor: '#b8c424',
+              backgroundColor: '#ff8000',
+              color: '#000000',
             },
           },
         },
@@ -45,7 +47,7 @@ const AppContent = () => {
       MuiAppBar: {
         styleOverrides: {
           root: {
-            backgroundColor: darkMode ? '#1e1e1e' : '#CCDC28',
+            backgroundColor: darkMode ? '#14213D' : '#E5E5E5',
             color: darkMode ? '#ffffff' : '#000000',
           },
         },
