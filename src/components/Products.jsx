@@ -11,8 +11,11 @@ import {
   Box,
   Chip,
   Pagination,
-  Stack
+  Stack,
+  IconButton
 } from '@mui/material';
+import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
+import ViewListRoundedIcon from '@mui/icons-material/ViewListRounded';
 import { ShoppingCart } from '@mui/icons-material';
 import api from '../utils/axios';
 
@@ -23,6 +26,7 @@ const Products = () => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(6);
+  const [gridView, setGridView] = useState(true);
 
   useEffect(() => {
     fetchProducts();
@@ -96,9 +100,14 @@ const Products = () => {
   return (
     <Container maxWidth="lg">
       <Box sx={{ my: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          Products ({filteredProducts.length} items)
-        </Typography>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Typography variant="h4" gutterBottom>
+            Products ({filteredProducts.length} items)
+          </Typography> 
+          <IconButton onClick={() => setGridView(!gridView)}>
+            {gridView ? <GridViewRoundedIcon fontSize='large' /> : <ViewListRoundedIcon fontSize='large' />}
+          </IconButton>
+        </div>
         
         <TextField
           fullWidth
