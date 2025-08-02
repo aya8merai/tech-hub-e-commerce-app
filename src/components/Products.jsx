@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import { 
   Container, 
   Grid,
@@ -12,11 +13,14 @@ import {
   Chip,
   Pagination,
   Stack,
-  IconButton
+  IconButton,
+  List,  
+  ListItem as MuiListItem,
 } from '@mui/material';
+import ListItem from './ListItem';
+import { ShoppingCart } from '@mui/icons-material';
 import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
 import ViewListRoundedIcon from '@mui/icons-material/ViewListRounded';
-import { ShoppingCart } from '@mui/icons-material';
 import api from '../utils/axios';
 
 const Products = () => {
@@ -27,6 +31,14 @@ const Products = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(6);
   const [gridView, setGridView] = useState(true);
+
+  const navigate = useNavigate();
+
+  const handleProductClick = (id, product) => {
+  navigate(`/products/${id}`, { 
+    state: { product }
+  });
+};
 
   useEffect(() => {
     fetchProducts();
@@ -116,11 +128,24 @@ const Products = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
           sx={{ mb: 3 }}
         />
-
+        
+        {
+          gridView ? (
         <Grid container spacing={3}>
           {currentProducts.map((product) => (
             <Grid size={{ xs: 12, sm: 6, md: 4 }} key={product.id}>
-              <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+              <Card sx={{ 
+                height: '100%', 
+                display: 'flex', 
+                flexDirection: 'column',
+                cursor: 'pointer',
+                '&:hover': {
+                  backgroundColor: 'action.hover',
+                  boxShadow: '0px 0px 0px 3px #FCA311AA',
+                  transform: 'translateY(-2px)',
+                  transition: 'all 0.3s ease'
+                }
+              }} onClick={() => handleProductClick(product.id, product)}>
                 <CardMedia
                   component="img"
                   height="200"
@@ -164,7 +189,38 @@ const Products = () => {
               </Card>
             </Grid>
           ))}
-        </Grid>
+        </Grid>) : 
+        (
+        <List >
+          {currentProducts.map((product) => (
+            <MuiListItem 
+              alignItems="center" 
+              sx={{ 
+                py: 3, 
+                cursor: 'pointer',
+                backgroundColor: 'background.paper',
+                borderRadius: 2,
+                mb: 2,
+                boxShadow: 1,
+                transition: 'background-color 0.3s',
+                '&:hover': {
+                  boxShadow: '0px 0px 0px 2px #FCA311AA',
+                  transform: 'translateY(-2px)',
+                  transition: 'all 0.3s ease',
+                  backgroundColor: 'action.hover',
+                }
+                }} 
+              onClick={() => handleProductClick(product.id, product)}
+              >
+              <ListItem 
+                key={product.id} 
+                product={product} 
+                addToCart={addToCart} 
+              />
+            </MuiListItem>
+          ))}
+          </List> 
+        )}
 
         {totalPages > 1 && (
           <Stack spacing={2} alignItems="center" sx={{ mt: 4 }}>

@@ -7,6 +7,7 @@ import { ThemeProvider, useTheme } from './context/ThemeContext';
 import Navigation from './components/Navigation';
 import Login from './components/Login';
 import Products from './components/Products';
+import ProductDetails from './components/ProductDetails';
 import Users from './components/Users';
 import Cart from './components/Cart';
 import Checkout from './components/Checkout';
@@ -64,6 +65,7 @@ const AppContent = () => {
           <ProtectedRoute>
             <Routes>
               <Route path="/products" element={<Products />} />
+              <Route path="/products/:id" element={<ProductDetails />} />
               <Route path="/users" element={<Users />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/checkout" element={<Checkout />} />
